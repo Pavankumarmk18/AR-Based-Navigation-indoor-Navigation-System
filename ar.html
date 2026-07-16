@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AR Based Indoor Navigation</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="ar-stage">
+  <video id="arVideo" class="ar-video" playsinline muted autoplay></video>
+
+  <div class="hud-bar top">
+    <div class="hud-top-row">
+      <div>
+        <div class="badge badge-outline" style="border-color:rgba(255,255,255,.3); color:#fff;">DESTINATION</div>
+        <div class="hud-dest" id="hudDest">—</div>
+      </div>
+      <div class="hud-dist mono" id="hudDist">— m</div>
+    </div>
+    <div class="hud-progress" id="hudProgress"></div>
+  </div>
+
+  <div class="arrow-wrap">
+    <svg class="arrow-rotor" id="arrowRotor" viewBox="0 0 100 100" fill="none">
+      <polygon points="50,8 80,78 50,62 20,78" fill="#FFB800"/>
+      <circle cx="50" cy="50" r="47" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
+    </svg>
+  </div>
+
+  <div class="hud-actions no-print">
+    <button class="fab" id="btnExit" title="Exit">✕</button>
+    <button class="fab" id="btnAdvanceDemo" title="Advance (demo, no QR needed)">⏭</button>
+    <button class="fab primary" id="btnScan" title="Scan checkpoint QR">▣</button>
+  </div>
+
+  <div class="hud-bar bottom">
+    <div class="hud-turn">
+      <div class="glyph">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3 L19 20 L12 16 L5 20 Z" fill="#FFB800"/></svg>
+      </div>
+      <div>
+        <div class="txt" id="hudTurnTxt">Getting your bearings…</div>
+        <div class="sub mono" id="hudTurnSub">—</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="permission-gate" id="permGate">
+    <div class="permission-card">
+      <svg class="icon" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#FFB800" stroke-width="1.5"/><path d="M12 4 L14 12 L12 20 L10 12 Z" fill="#FFB800"/></svg>
+      <h2 style="color:#fff; font-size:1.5rem;">Enable camera &amp; compass</h2>
+      <p style="color:var(--fog); font-size:.9rem;">AR Indoor Navigation overlays a live direction arrow on your
+      camera feed and rotates it using your phone's compass. Both permissions are used only in this
+      session — nothing is uploaded.</p>
+      <button class="btn btn-primary" id="btnEnable" style="margin-top:10px;">Enable &amp; start</button>
+      <p class="footnote" id="permError" style="color:var(--stop); margin-top:10px;"></p>
+    </div>
+  </div>
+
+  <div class="arrived-screen" id="arrivedScreen" style="display:none;">
+    <svg width="64" height="64" viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#fff" stroke-width="2.5" fill="none"/></svg>
+    <h2 style="color:#fff;">You've arrived</h2>
+    <p id="arrivedLabel" style="color:rgba(255,255,255,.85);"></p>
+    <div class="hero-actions">
+      <a class="btn btn-dark" href="navigate.html">Navigate again</a>
+    </div>
+  </div>
+</div>
+
+<!-- checkpoint QR scan modal -->
+<div class="qr-modal" id="qrModal" style="display:none;">
+  <video id="qrVideo" playsinline muted></video>
+  <div class="qr-hint">Scan the QR checkpoint nearest you</div>
+  <button class="btn btn-ghost btn-sm" id="btnCancelScan">Cancel</button>
+</div>
+<canvas id="qrCanvas" style="display:none;"></canvas>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.js"></script>
+<script src="js/db.js"></script>
+<script src="js/pathfinding.js"></script>
+<script src="js/ar.js"></script>
+</body>
+</html>

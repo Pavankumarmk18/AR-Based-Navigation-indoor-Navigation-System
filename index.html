@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AR Based Indoor Navigation</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <span class="chip">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 2 L20 20 L12 15 L4 20 Z" fill="#FFB800"/></svg>
+    </span>
+    AR Indoor Navigation
+  </div>
+  <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="admin.html">Admin</a>
+    <a href="navigate.html">Navigate</a>
+  </div>
+</div>
+
+<div class="shell">
+  <div class="hero">
+    <div>
+      <span class="eyebrow">AR BASED INDOOR NAVIGATION — MAJOR PROJECT</span>
+      <h1>Find any room.<br>Follow the arrow.</h1>
+      <p class="lede">AR Indoor Navigation turns a photo of your building's floor plan into a walkable
+      map, then guides people to any room using a compass-driven AR arrow overlaid on
+      their phone's live camera feed — no GPS, no beacons, no app store required.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="admin.html">Build your dataset →</a>
+        <a class="btn btn-ghost" href="navigate.html">Try the sample building</a>
+      </div>
+
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="num">01 / MAP IT</div>
+          <p class="muted">Upload a floor plan photo, drop pins on rooms and junctions, connect the corridors.</p>
+        </div>
+        <div class="how-step">
+          <div class="num">02 / PRINT CHECKPOINTS</div>
+          <p class="muted">Generate a QR code per pin and stick them at doorways — that's how the app knows where you are.</p>
+        </div>
+        <div class="how-step">
+          <div class="num">03 / WALK WITH AR</div>
+          <p class="muted">Open the camera. A HUD arrow rotates live to point toward the next checkpoint.</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="compass-hero">
+        <svg class="compass-arrow" viewBox="0 0 100 100" fill="none">
+          <polygon points="50,6 78,72 50,58 22,72" fill="#FFB800"/>
+          <circle cx="50" cy="50" r="46" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title"><h3 style="margin:0">Why no SLAM / markerless tracking?</h3></div>
+    <p class="muted">True markerless AR (ARCore/ARKit-style world tracking) needs native device APIs
+    that aren't reliably available inside a browser. AR Indoor Navigation uses a method that <em>is</em> reliable
+    across phones: a pre-mapped floor-plan graph, the phone's magnetometer (compass) for arrow
+    orientation, and QR checkpoints for accurate position resets as you pass them. It's a deliberate
+    engineering trade-off — documented in the README, along with BLE-beacon and native-SLAM as
+    future extensions.</p>
+  </div>
+
+  <div class="card">
+    <div class="section-title"><h3 style="margin:0">Two roles</h3></div>
+    <div class="field-row">
+      <div>
+        <span class="badge">ADMIN</span>
+        <p class="muted">Upload your college's floor plan, place nodes for every room/junction,
+        calibrate scale &amp; north, print QR checkpoints, export the dataset as a portable JSON file.</p>
+        <a class="btn btn-dark btn-sm" href="admin.html">Open Admin →</a>
+      </div>
+      <div>
+        <span class="badge" style="background:var(--route)">NAVIGATE</span>
+        <p class="muted">Pick a destination, see the shortest route on a 2D map, then launch the
+        AR camera view for turn-by-turn compass-arrow guidance.</p>
+        <a class="btn btn-dark btn-sm" href="navigate.html">Open Navigate →</a>
+      </div>
+    </div>
+  </div>
+
+  <p class="footnote" style="margin-top:22px;">Camera &amp; compass access require a secure context
+  (localhost or HTTPS). See README.md for run &amp; deploy instructions.</p>
+</div>
+
+</body>
+</html>

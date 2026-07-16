@@ -1,0 +1,42 @@
+{
+  "meta": { "app": "waypoint-ar", "version": 1, "note": "Bundled sample — replace with your own campus dataset via the Admin panel." },
+  "floors": [
+    {
+      "id": "floor_sample",
+      "name": "Sample Building — Ground Floor",
+      "imageData": "sample-data/sample-floor.svg",
+      "widthPx": 900,
+      "heightPx": 600,
+      "pxPerMeter": 30,
+      "northOffsetDeg": 0,
+      "createdAt": 0
+    }
+  ],
+  "nodes": [
+    { "id": "j1", "floorId": "floor_sample", "x": 120, "y": 300, "label": "Corridor A", "type": "junction" },
+    { "id": "j2", "floorId": "floor_sample", "x": 340, "y": 300, "label": "Corridor B", "type": "junction" },
+    { "id": "j3", "floorId": "floor_sample", "x": 560, "y": 300, "label": "Corridor C", "type": "junction" },
+    { "id": "j4", "floorId": "floor_sample", "x": 780, "y": 300, "label": "Corridor D", "type": "junction" },
+    { "id": "room101", "floorId": "floor_sample", "x": 120, "y": 145, "label": "Room 101", "type": "room" },
+    { "id": "room102", "floorId": "floor_sample", "x": 340, "y": 145, "label": "Room 102", "type": "room" },
+    { "id": "lab103", "floorId": "floor_sample", "x": 560, "y": 145, "label": "Lab 103", "type": "room" },
+    { "id": "stairs", "floorId": "floor_sample", "x": 780, "y": 145, "label": "Stairs", "type": "stairs" },
+    { "id": "room201", "floorId": "floor_sample", "x": 120, "y": 455, "label": "Room 201", "type": "room" },
+    { "id": "faculty", "floorId": "floor_sample", "x": 340, "y": 455, "label": "Faculty Room", "type": "room" },
+    { "id": "library", "floorId": "floor_sample", "x": 560, "y": 455, "label": "Library", "type": "room" },
+    { "id": "entrance", "floorId": "floor_sample", "x": 780, "y": 455, "label": "Main Entrance", "type": "entrance" }
+  ],
+  "edges": [
+    { "id": "e1", "floorId": "floor_sample", "aId": "j1", "bId": "j2", "distanceM": 7.33 },
+    { "id": "e2", "floorId": "floor_sample", "aId": "j2", "bId": "j3", "distanceM": 7.33 },
+    { "id": "e3", "floorId": "floor_sample", "aId": "j3", "bId": "j4", "distanceM": 7.33 },
+    { "id": "e4", "floorId": "floor_sample", "aId": "j1", "bId": "room101", "distanceM": 5.17 },
+    { "id": "e5", "floorId": "floor_sample", "aId": "j2", "bId": "room102", "distanceM": 5.17 },
+    { "id": "e6", "floorId": "floor_sample", "aId": "j3", "bId": "lab103", "distanceM": 5.17 },
+    { "id": "e7", "floorId": "floor_sample", "aId": "j4", "bId": "stairs", "distanceM": 5.17 },
+    { "id": "e8", "floorId": "floor_sample", "aId": "j1", "bId": "room201", "distanceM": 5.17 },
+    { "id": "e9", "floorId": "floor_sample", "aId": "j2", "bId": "faculty", "distanceM": 5.17 },
+    { "id": "e10", "floorId": "floor_sample", "aId": "j3", "bId": "library", "distanceM": 5.17 },
+    { "id": "e11", "floorId": "floor_sample", "aId": "j4", "bId": "entrance", "distanceM": 5.17 }
+  ]
+}

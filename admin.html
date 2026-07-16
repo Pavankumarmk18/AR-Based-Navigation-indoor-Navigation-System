@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin — AR Indoor Navigation</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <span class="chip"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2 L20 20 L12 15 L4 20 Z" fill="#FFB800"/></svg></span>
+    AR Indoor Navigation
+  </div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="admin.html" class="active">Admin</a>
+    <a href="navigate.html">Navigate</a>
+  </div>
+</div>
+
+<div class="shell">
+  <span class="eyebrow">DATASET BUILDER</span>
+  <h1 style="font-size:2.1rem;">Map your building</h1>
+  <p class="muted" style="max-width:60ch;">Every room and junction you place becomes a node in a
+  graph. Every corridor you connect becomes an edge. That graph is your dataset — export it any
+  time as a single JSON file.</p>
+
+  <!-- Floor management -->
+  <div class="card no-print">
+    <div class="section-title"><h3 style="margin:0">1 · Floor</h3>
+      <button class="btn btn-ghost btn-sm" id="btnLoadSample">Load sample building</button>
+    </div>
+    <div class="field-row">
+      <div>
+        <label>Existing floors</label>
+        <select id="floorSelect"><option value="">— none yet —</option></select>
+      </div>
+      <div>
+        <label>Delete current floor</label>
+        <button class="btn btn-danger btn-sm" id="btnDeleteFloor">Delete floor + all pins</button>
+      </div>
+    </div>
+
+    <details style="margin-top:14px;">
+      <summary style="cursor:pointer;font-weight:600;font-size:.9rem;">+ Add a new floor</summary>
+      <div class="field-row" style="margin-top:10px;">
+        <div>
+          <label>Floor name</label>
+          <input type="text" id="newFloorName" placeholder="e.g. Block A — Ground Floor">
+        </div>
+        <div>
+          <label>Floor plan image</label>
+          <input type="file" id="newFloorImage" accept="image/*">
+        </div>
+      </div>
+      <button class="btn btn-primary btn-sm" id="btnAddFloor" style="margin-top:10px;">Add floor</button>
+    </details>
+  </div>
+
+  <!-- Calibration -->
+  <div class="card no-print" id="calibCard" style="display:none;">
+    <div class="section-title"><h3 style="margin:0">2 · Calibrate</h3></div>
+    <div class="field-row">
+      <div>
+        <label>Scale — click two points on the map, then enter the real distance</label>
+        <div class="field-row">
+          <button class="btn btn-ghost btn-sm" id="btnCalibScale">Pick 2 points</button>
+          <input type="number" id="calibMeters" placeholder="metres apart" step="0.1">
+          <button class="btn btn-dark btn-sm" id="btnSaveScale">Save scale</button>
+        </div>
+        <p class="muted" id="scaleReadout" style="margin-top:6px;">No scale set — edges will store raw pixel ratios.</p>
+      </div>
+      <div>
+        <label>North offset — which way is "up" on the map, in compass degrees</label>
+        <div class="field-row">
+          <input type="number" id="northManual" placeholder="0–359°" min="0" max="359">
+          <button class="btn btn-ghost btn-sm" id="btnCaptureNorth">Capture from phone compass</button>
+        </div>
+        <p class="muted" id="northReadout" style="margin-top:6px;">North offset: 0° (image-up = North)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Editor -->
+  <div id="editorArea" style="display:none;">
+    <div class="card no-print">
+      <div class="section-title"><h3 style="margin:0">3 · Place nodes &amp; connect corridors</h3></div>
+      <div class="toolbar">
+        <button class="btn btn-ghost btn-sm mode-btn is-active" data-mode="node">＋ Add node</button>
+        <button class="btn btn-ghost btn-sm mode-btn" data-mode="edge">⌁ Connect nodes</button>
+        <button class="btn btn-ghost btn-sm mode-btn" data-mode="select">↖ Select / move</button>
+        <span style="flex:1"></span>
+        <span class="badge badge-outline" id="nodeCount">0 nodes</span>
+        <span class="badge badge-outline" id="edgeCount">0 edges</span>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="floorCanvas"></canvas>
+      </div>
+      <p class="footnote" style="margin-top:8px;">Add-node mode: tap the map to drop a pin.
+      Connect mode: tap one node, then another, to link them. Select mode: drag a pin to reposition it, click to edit/delete.</p>
+    </div>
+
+    <div class="card no-print">
+      <div class="section-title"><h3 style="margin:0">4 · Checkpoints (QR)</h3>
+        <div>
+          <button class="btn btn-ghost btn-sm" id="btnPrintQR">Print QR sheet</button>
+        </div>
+      </div>
+      <p class="muted">Print one QR code per node and stick it near the matching doorway/junction
+      in the real building. Scanning one during navigation resets the walker's exact position.</p>
+      <div id="qrSheet" class="qr-sheet"></div>
+    </div>
+
+    <div class="card no-print">
+      <div class="section-title"><h3 style="margin:0">5 · Dataset file</h3></div>
+      <p class="muted">This JSON file <strong>is</strong> your project's dataset — floor images,
+      node coordinates, corridor graph, calibration. Back it up, hand it to a teammate, or load
+      it on another device.</p>
+      <div class="hero-actions" style="margin-top:6px;">
+        <button class="btn btn-dark btn-sm" id="btnExport">Export dataset (.json)</button>
+        <label class="btn btn-ghost btn-sm" style="cursor:pointer;">
+          Import dataset (.json)
+          <input type="file" id="importFile" accept="application/json" style="display:none;">
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- hidden qrcode render target used by qrcodejs before we snapshot into the tile -->
+<div id="qrTemp" style="position:fixed; left:-9999px; top:-9999px;"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="js/db.js"></script>
+<script src="js/pathfinding.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
