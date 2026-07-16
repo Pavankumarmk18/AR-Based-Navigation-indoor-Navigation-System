@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Waypoint — AR Indoor Navigation System
 
 A browser-based major project: upload a floor plan, build a walkable graph of a building,
@@ -163,3 +164,7 @@ are the two calibration numbers described above.
 
 Both libraries are loaded from a public CDN in the HTML files — no build step, no
 `npm install` needed to run the app itself.
+=======
+# AR-Based-Navigation-indoor-Navigation-System
+we do indoor Navigation
+>>>>>>> 8575bebc10396bdaf16b47c0b1a15ad7f2714a4c
