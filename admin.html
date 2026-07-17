@@ -126,6 +126,21 @@
         </label>
       </div>
     </div>
+
+    <div class="card no-print">
+      <div class="section-title"><h3 style="margin:0">6 · Cloud Sync</h3></div>
+      <p class="muted">Upload your dataset to the cloud and share it with any device using a 6-letter Building Code.</p>
+      <div class="field-row" style="margin-top:10px;">
+        <div>
+          <label>Upload to cloud</label>
+          <div class="field-row">
+            <input type="text" id="cloudCodeInput" placeholder="Existing code (leave blank for new)" style="text-transform:uppercase;max-width:220px;">
+            <button class="btn btn-primary btn-sm" id="btnCloudPush">☁ Upload</button>
+          </div>
+          <p class="muted" id="cloudPushStatus" style="margin-top:6px;"></p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -139,5 +154,20 @@
 <script src="js/cloud.js"></script>
 <script src="js/pathfinding.js"></script>
 <script src="js/admin.js"></script>
+<script>
+  document.getElementById('btnCloudPush').addEventListener('click', async () => {
+    const status = document.getElementById('cloudPushStatus');
+    const code = document.getElementById('cloudCodeInput').value.trim();
+    status.textContent = 'Uploading…';
+    try {
+      const dataset = await WPDB.exportAll();
+      const result = await WPCloud.push(dataset, code || undefined);
+      document.getElementById('cloudCodeInput').value = result;
+      status.textContent = '✅ Uploaded! Building code: ' + result;
+    } catch (e) {
+      status.textContent = '❌ ' + e.message;
+    }
+  });
+</script>
 </body>
 </html>
