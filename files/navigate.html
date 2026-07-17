@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Navigate — Waypoint</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <span class="chip"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2 L20 20 L12 15 L4 20 Z" fill="#FFB800"/></svg></span>
+    Waypoint
+  </div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="admin.html">Admin</a>
+    <a href="navigate.html" class="active">Navigate</a>
+  </div>
+</div>
+
+<div class="shell">
+  <span class="eyebrow">WAYFINDING</span>
+  <h1 style="font-size:2.1rem;">Where to?</h1>
+
+  <div class="card" id="emptyState" style="display:none;">
+    <div class="empty">
+      <p>No dataset yet. <a href="admin.html">Build one in Admin</a>, or load the bundled sample building there.</p>
+    </div>
+  </div>
+
+  <div id="planner" style="display:none;">
+    <div class="card">
+      <div class="field-row">
+        <div>
+          <label>Floor</label>
+          <select id="floorSelect"></select>
+        </div>
+        <div>
+          <label>Starting point</label>
+          <select id="startSelect"></select>
+        </div>
+        <div>
+          <label>Destination</label>
+          <select id="destSelect"></select>
+        </div>
+      </div>
+      <div class="hero-actions" style="margin-top:14px;">
+        <button class="btn btn-ghost btn-sm" id="btnScanStart">📷 Scan QR to set starting point</button>
+        <button class="btn btn-primary" id="btnFindRoute">Find route</button>
+      </div>
+    </div>
+
+    <div class="card" id="routeCard" style="display:none;">
+      <div class="section-title">
+        <h3 style="margin:0" id="routeTitle">Route</h3>
+        <span class="badge mono" id="routeMeta"></span>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="mapCanvas"></canvas>
+      </div>
+      <div id="stepsList" style="margin-top:12px;"></div>
+      <div class="hero-actions" style="margin-top:14px;">
+        <button class="btn btn-dark" id="btnStartAR">▶ Start AR Navigation</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- QR scan modal -->
+<div class="qr-modal" id="qrModal" style="display:none;">
+  <video id="qrVideo" playsinline muted></video>
+  <div class="qr-hint">Point the camera at a checkpoint QR code</div>
+  <button class="btn btn-ghost btn-sm" id="btnCancelScan">Cancel</button>
+</div>
+<canvas id="qrCanvas" style="display:none;"></canvas>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.js"></script>
+<script src="js/db.js"></script>
+<script src="js/pathfinding.js"></script>
+<script src="js/navigate.js"></script>
+</body>
+</html>
