@@ -23,6 +23,7 @@
   let lastResult = null; // { pathNodes, steps, distanceM }
 
   async function init() {
+    await syncDatasetToDB();
     floors = await WPDB.Floors.all();
     if (!floors.length) { els.emptyState.style.display = 'block'; return; }
     els.planner.style.display = 'block';
@@ -120,6 +121,7 @@
   // ---------------- QR scan to set start ----------------
   let scanStream = null, scanRAF = null;
   els.btnScanStart.addEventListener('click', async () => {
+    if (typeof jsQR === 'undefined') { alert('QR library not loaded yet. Please wait a moment and try again.'); return; }
     els.qrModal.style.display = 'flex';
     try {
       scanStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });

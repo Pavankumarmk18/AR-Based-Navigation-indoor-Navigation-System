@@ -1,0 +1,25 @@
+{
+  "meta": { "app": "waypoint-ar", "version": 1 },
+  "floors": [
+    {
+      "id": "floor_default",
+      "name": "My Building — Ground Floor",
+      "imageData": "",
+      "widthPx": 800,
+      "heightPx": 600,
+      "pxPerMeter": 50,
+      "northOffsetDeg": 0
+    }
+  ],
+  "nodes": [
+    { "id": "node_entry", "floorId": "floor_default", "x": 400, "y": 550, "label": "Main Entry", "type": "entrance" },
+    { "id": "node_j1",    "floorId": "floor_default", "x": 400, "y": 400, "label": "Junction 1", "type": "junction" },
+    { "id": "node_101",   "floorId": "floor_default", "x": 200, "y": 400, "label": "Room 101",   "type": "room" },
+    { "id": "node_102",   "floorId": "floor_default", "x": 600, "y": 400, "label": "Room 102",   "type": "room" }
+  ],
+  "edges": [
+    { "id": "edge_1", "floorId": "floor_default", "aId": "node_entry", "bId": "node_j1",  "distanceM": 6 },
+    { "id": "edge_2", "floorId": "floor_default", "aId": "node_j1",    "bId": "node_101", "distanceM": 8 },
+    { "id": "edge_3", "floorId": "floor_default", "aId": "node_j1",    "bId": "node_102", "distanceM": 8 }
+  ]
+}
